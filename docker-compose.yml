@@ -24,9 +24,9 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: your_db_user
-      POSTGRES_PASSWORD: your_db_password
-      POSTGRES_DB: your_db_name
+      POSTGRES_USER: fourat
+      POSTGRES_PASSWORD: fourat123
+      POSTGRES_DB: django_db
     ports:
       - "5432:5432"
     networks:
