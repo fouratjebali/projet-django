@@ -1,0 +1,636 @@
+{
+  "board": {
+    "name": "QueueLess Clinics - Suivi projet developpement",
+    "description": "Board Trello genere a partir de l'analyse du projet QueueLess Clinics. Le projet est organise pour un contexte de developpement local : Angular 15, Django REST Framework, PostgreSQL, Redis et Docker Compose de developpement. Aucune tache de production ou de deploiement final n'est planifiee.",
+    "sourceProject": {
+      "backend": "django-backend",
+      "frontend": "angular-app",
+      "database": "database/schema.sql, database/seed.sql",
+      "infrastructureDev": "docker-compose.yml",
+      "legacyCopy": "QuelessLessClinics"
+    },
+    "architectureSummary": {
+      "backend": "Django REST Framework expose des ViewSets generiques et des endpoints dedies pour les modules public, staff et admin. Les modeles principaux sont Clinic, ClinicSettings, User, Service, Queue, Ticket, QueueEvent, Notification, AdminAuditLog et SystemSettings.",
+      "frontend": "Angular 15 organise l'interface en layouts public, staff et admin, avec pages dediees pour inscription en file, suivi ticket, dashboard staff, gestion services/parametres, cliniques, utilisateurs, analytics, logs et parametres systeme.",
+      "database": "PostgreSQL contient les tables metier principales, des donnees seed de demonstration et des migrations Django. Redis est present dans Docker Compose pour support de cache ou de temps reel en developpement.",
+      "integration": "ApiService Angular centralise les appels HTTP vers http://localhost:8000/api et ajoute des headers X-User-* pour les roles."
+    },
+    "mainFeatures": [
+      "Recherche et consultation publique des cliniques",
+      "Inscription d'un patient dans une file et suivi de ticket",
+      "Tableau public de file par clinique",
+      "Authentification email/mot de passe et sessions locales",
+      "Dashboard staff avec appels, service, annulation, no-show et reorganisation",
+      "Gestion staff des services, parametres de clinique, historique et rapports",
+      "Administration des cliniques, utilisateurs, roles et mots de passe temporaires",
+      "Analytics, exports CSV/PDF, audit logs et parametres systeme"
+    ],
+    "members": [
+      "Fourat Jebali",
+      "Med Amin Neji",
+      "Salim Halila"
+    ],
+    "workloadSummary": {
+      "Fourat Jebali": "10 cartes",
+      "Med Amin Neji": "10 cartes",
+      "Salim Halila": "10 cartes"
+    },
+    "labels": [
+      { "name": "Backend", "color": "blue" },
+      { "name": "Frontend", "color": "green" },
+      { "name": "Fullstack", "color": "purple" },
+      { "name": "UI/UX", "color": "pink" },
+      { "name": "Base de donnees", "color": "orange" },
+      { "name": "Tests", "color": "yellow" },
+      { "name": "Documentation", "color": "sky" },
+      { "name": "Priorite elevee", "color": "red" },
+      { "name": "Priorite moyenne", "color": "yellow" },
+      { "name": "Priorite faible", "color": "lime" }
+    ],
+    "lists": [
+      {
+        "name": "Sprint 1 : Cadrage et environnement de developpement",
+        "sprintOwner": "Fourat Jebali",
+        "goal": "Comprendre le projet, clarifier la structure active et rendre l'environnement local exploitable par toute l'equipe.",
+        "cards": [
+          {
+            "title": "Cartographier l'architecture actuelle du projet",
+            "description": "Analyser le depot pour comprendre les dossiers actifs, les modules backend/frontend, la base de donnees, Docker Compose et la copie legacy QuelessLessClinics.",
+            "type": "Documentation",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Identifier les dossiers actifs : angular-app, django-backend, database, scripts et trello",
+              "Identifier la copie legacy QuelessLessClinics et son statut",
+              "Lister les pages Angular par espace : public, auth, staff et admin",
+              "Lister les modeles Django principaux et leurs relations",
+              "Resumer les flux metier principaux du projet"
+            ],
+            "dependencies": [],
+            "priority": "elevee",
+            "estimate": "0.5 jour"
+          },
+          {
+            "title": "Clarifier la structure du depot et les fichiers a ignorer",
+            "description": "Nettoyer la comprehension du depot afin d'eviter les confusions entre code actif, fichiers generes, dependances installees et ressources de demonstration.",
+            "type": "Documentation",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Verifier .gitignore pour node_modules, environnements virtuels, pycache et fichiers locaux",
+              "Documenter le role de QuelessLessClinics comme copie non prioritaire si elle reste presente",
+              "Signaler les fichiers generes ou suspects comme NUL, NUL.map et __pycache__",
+              "Lister les fichiers de configuration importants",
+              "Proposer une organisation cible simple pour le developpement"
+            ],
+            "dependencies": [
+              "Cartographier l'architecture actuelle du projet"
+            ],
+            "priority": "moyenne",
+            "estimate": "0.5 jour"
+          },
+          {
+            "title": "Stabiliser Docker Compose pour le developpement local",
+            "description": "Verifier que les services Angular, Django, PostgreSQL, Redis et pgAdmin sont utilisables en local pour les tests et la demonstration du projet.",
+            "type": "Fullstack",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Verifier les ports 4200, 8000, 5432, 6379 et 5050",
+              "Tester la construction des conteneurs en developpement",
+              "Verifier les volumes PostgreSQL, Redis et node_modules",
+              "Documenter les commandes docker compose up, down et logs",
+              "Preciser que Docker sert uniquement l'environnement de developpement"
+            ],
+            "dependencies": [
+              "Clarifier la structure du depot et les fichiers a ignorer"
+            ],
+            "priority": "elevee",
+            "estimate": "1 jour"
+          },
+          {
+            "title": "Verifier les variables d'environnement de developpement",
+            "description": "Controler les valeurs necessaires au lancement local de Django, Angular, PostgreSQL et Redis, sans introduire de secrets reels dans le depot.",
+            "type": "Documentation",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Revoir .env.example et les variables utilisees par docker-compose.yml",
+              "Verifier DB_HOST, DB_NAME, DB_USER, DB_PASSWORD et CORS_ALLOWED_ORIGINS",
+              "Verifier environment.ts cote Angular",
+              "Documenter les valeurs de demonstration autorisees",
+              "Ajouter une note sur les secrets Trello locaux non versionnes"
+            ],
+            "dependencies": [
+              "Stabiliser Docker Compose pour le developpement local"
+            ],
+            "priority": "moyenne",
+            "estimate": "0.5 jour"
+          },
+          {
+            "title": "Rediger les commandes de lancement et verification rapide",
+            "description": "Preparer une documentation courte pour lancer le frontend, le backend, la base de donnees et verifier que l'application repond.",
+            "type": "Documentation",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Documenter npm install et npm start dans angular-app",
+              "Documenter pip install, migrate et runserver dans django-backend",
+              "Documenter le lancement complet via Docker Compose",
+              "Ajouter les URLs locales : Angular, API, admin Django et pgAdmin",
+              "Ajouter une checklist de verification apres installation"
+            ],
+            "dependencies": [
+              "Verifier les variables d'environnement de developpement"
+            ],
+            "priority": "moyenne",
+            "estimate": "0.5 jour"
+          }
+        ]
+      },
+      {
+        "name": "Sprint 2 : Backend, base de donnees et logique metier",
+        "sprintOwner": "Med Amin Neji",
+        "goal": "Fiabiliser le coeur metier Django : schema, migrations, seed, authentification, roles et transitions de tickets.",
+        "cards": [
+          {
+            "title": "Aligner les modeles Django avec la base PostgreSQL",
+            "description": "Comparer les modeles Django, les migrations et le schema SQL pour eviter les erreurs lors des migrations ou du chargement des donnees seed.",
+            "type": "Base de donnees",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Comparer Clinic, ClinicSettings, User, Service, Queue, Ticket et Notification",
+              "Verifier les champs ajoutes : timezone, emergency_priority_rules, force_password_change",
+              "Verifier AdminAuditLog et SystemSettings",
+              "Identifier les divergences password/password_hash",
+              "Valider une migration sur base locale propre"
+            ],
+            "dependencies": [
+              "Rediger les commandes de lancement et verification rapide"
+            ],
+            "priority": "elevee",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Corriger et valider les donnees seed de developpement",
+            "description": "S'assurer que les donnees de demonstration permettent de tester les roles admin, doctor, nurse, receptionist, les cliniques, les services et les tickets.",
+            "type": "Base de donnees",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Verifier les cliniques seed et leurs settings",
+              "Verifier les utilisateurs seed et les mots de passe de test",
+              "Verifier les services, queues, tickets, events et notifications",
+              "Tester un login admin et un login staff",
+              "Documenter les comptes de demonstration utilisables"
+            ],
+            "dependencies": [
+              "Aligner les modeles Django avec la base PostgreSQL"
+            ],
+            "priority": "elevee",
+            "estimate": "1 jour"
+          },
+          {
+            "title": "Stabiliser l'authentification backend et les roles",
+            "description": "Fiabiliser LoginView, AuthMe, logout, change-password et les controles de roles bases sur les utilisateurs et headers existants.",
+            "type": "Backend",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Tester login email/password avec les comptes seed",
+              "Gerer les comptes inactifs",
+              "Gerer force_password_change dans la reponse auth",
+              "Verifier les headers X-User-Id, X-User-Role et X-User-Email",
+              "Documenter les limites de securite du mode developpement"
+            ],
+            "dependencies": [
+              "Corriger et valider les donnees seed de developpement"
+            ],
+            "priority": "elevee",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Fiabiliser les transitions de tickets et statistiques de queue",
+            "description": "Revoir les actions call, start, complete, cancel, no-show et reorder pour garantir des statuts coherents et des statistiques de file a jour.",
+            "type": "Backend",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Verifier les statuts autorises pour chaque action",
+              "Verifier la mise a jour de waiting, called, serving, completed, cancelled et no_show",
+              "Verifier avg_wait_time, avg_service_time et current_wait_time",
+              "Creer les QueueEvent attendus",
+              "Tester les erreurs fonctionnelles : ticket introuvable, queue fermee, action interdite"
+            ],
+            "dependencies": [
+              "Stabiliser l'authentification backend et les roles"
+            ],
+            "priority": "elevee",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Uniformiser les validations et erreurs API",
+            "description": "Rendre les reponses API exploitables par Angular avec des messages clairs, des codes HTTP coherents et des validations de payload robustes.",
+            "type": "Backend",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Verifier les erreurs 400 pour payload invalide",
+              "Verifier les erreurs 403 pour role non autorise",
+              "Verifier les erreurs 404 pour ressource introuvable",
+              "Harmoniser les champs detail et field errors",
+              "Tester les erreurs sur tickets, services, cliniques et users"
+            ],
+            "dependencies": [
+              "Fiabiliser les transitions de tickets et statistiques de queue"
+            ],
+            "priority": "moyenne",
+            "estimate": "1 jour"
+          }
+        ]
+      },
+      {
+        "name": "Sprint 3 : Parcours public et authentification Angular",
+        "sprintOwner": "Salim Halila",
+        "goal": "Rendre les parcours patient et login utilisables, connectes a l'API et robustes en developpement.",
+        "cards": [
+          {
+            "title": "Finaliser la page publique de recherche des cliniques",
+            "description": "Ameliorer PublicHomePage pour permettre au patient de rechercher une clinique active et acceder rapidement a l'inscription en file.",
+            "type": "Frontend",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Afficher les cliniques actives depuis l'API",
+              "Filtrer par nom, ville et slug",
+              "Afficher les informations utiles : adresse, telephone, temps moyen si disponible",
+              "Gerer chargement, etat vide et erreur API",
+              "Verifier l'affichage mobile et desktop"
+            ],
+            "dependencies": [
+              "Uniformiser les validations et erreurs API"
+            ],
+            "priority": "elevee",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Connecter le formulaire d'inscription en file",
+            "description": "Finaliser JoinQueuePage afin qu'un patient choisisse une clinique, un service et cree un ticket correctement.",
+            "type": "Frontend",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Recuperer la clinique par slug ou id",
+              "Charger les services actifs de la clinique",
+              "Valider nom, telephone, email optionnel et service",
+              "Appeler createTicket avec le payload attendu",
+              "Rediriger vers la page statut apres creation"
+            ],
+            "dependencies": [
+              "Finaliser la page publique de recherche des cliniques"
+            ],
+            "priority": "elevee",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Finaliser le suivi ticket et le tableau public",
+            "description": "Rendre TicketStatusPage, TrackTicketPage et PublicBoardPage coherents avec les donnees de tickets et files exposees par le backend.",
+            "type": "Frontend",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Afficher numero de ticket, position, statut, service et temps estime",
+              "Gerer ticket introuvable ou queue fermee",
+              "Ajouter un rafraichissement manuel ou intervalle raisonnable",
+              "Afficher la file publique d'une clinique par slug",
+              "Tester avec les tickets seed de developpement"
+            ],
+            "dependencies": [
+              "Connecter le formulaire d'inscription en file"
+            ],
+            "priority": "moyenne",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Stabiliser login, session et redirections Angular",
+            "description": "Verifier LoginPage, AuthSessionService et AuthRoleGuard pour garantir les redirections admin/staff et une session locale fiable.",
+            "type": "Frontend",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Tester remember me avec localStorage",
+              "Tester session simple avec sessionStorage",
+              "Rediriger ADMIN vers /admin/analytics",
+              "Rediriger STAFF, DOCTOR, NURSE et RECEPTIONIST vers /staff/dashboard",
+              "Afficher correctement les erreurs de connexion"
+            ],
+            "dependencies": [
+              "Stabiliser l'authentification backend et les roles"
+            ],
+            "priority": "elevee",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Nettoyer ApiService et les types Angular principaux",
+            "description": "Aligner les methodes ApiService avec les endpoints Django existants et reduire les usages any les plus sensibles.",
+            "type": "Fullstack",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Verifier tous les chemins /api utilises par ApiService",
+              "Typer les payloads publics : clinic, service, ticket",
+              "Typer les payloads staff : queue, ticket actions, settings",
+              "Typer les payloads admin : users, analytics, audit logs",
+              "Centraliser la lecture des erreurs backend cote composants"
+            ],
+            "dependencies": [
+              "Stabiliser login, session et redirections Angular"
+            ],
+            "priority": "moyenne",
+            "estimate": "2 jours"
+          }
+        ]
+      },
+      {
+        "name": "Sprint 4 : Module staff et gestion quotidienne des files",
+        "sprintOwner": "Fourat Jebali",
+        "goal": "Permettre au personnel clinique de piloter la file du jour, les services, les parametres et les rapports en developpement.",
+        "cards": [
+          {
+            "title": "Finaliser le dashboard staff de la file du jour",
+            "description": "Connecter DashboardPage aux endpoints staff pour afficher les KPIs, tickets filtrables et actions principales de file.",
+            "type": "Frontend",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Afficher waiting, serving, completed, no_show et avg_wait",
+              "Charger la queue du jour et les tickets associes",
+              "Brancher call, start, complete, cancel et no-show",
+              "Ajouter les filtres statut, service et recherche",
+              "Afficher un feedback apres chaque action"
+            ],
+            "dependencies": [
+              "Fiabiliser les transitions de tickets et statistiques de queue",
+              "Nettoyer ApiService et les types Angular principaux"
+            ],
+            "priority": "elevee",
+            "estimate": "2.5 jours"
+          },
+          {
+            "title": "Durcir les permissions backend du module staff",
+            "description": "Formaliser les actions autorisees par STAFF, DOCTOR, NURSE et RECEPTIONIST pour limiter les operations sensibles.",
+            "type": "Backend",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Lister les actions sensibles du module staff",
+              "Verifier _has_role_access pour tickets, services, settings et rapports",
+              "Tester les refus d'acces par role",
+              "Verifier que l'utilisateur reste dans sa clinique",
+              "Retourner des erreurs 403 coherentes"
+            ],
+            "dependencies": [
+              "Stabiliser l'authentification backend et les roles"
+            ],
+            "priority": "elevee",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Completer la gestion staff des services et parametres clinique",
+            "description": "Stabiliser ServicesSettingsPage et ClinicSettingsPage pour gerer les services, horaires, capacite, messages et options de notification.",
+            "type": "Fullstack",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Tester creation, edition et suppression logique de services",
+              "Verifier code, duree estimee, ordre et statut actif",
+              "Tester horaires d'ouverture et fermeture",
+              "Tester max_capacity, allow_walkins et allow_online_joining",
+              "Afficher les erreurs de validation sans bloquer l'interface"
+            ],
+            "dependencies": [
+              "Durcir les permissions backend du module staff"
+            ],
+            "priority": "moyenne",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Finaliser profil staff et changement de mot de passe",
+            "description": "Verifier UserProfilePage, AuthChangePasswordView et la mise a jour de session locale apres modification du profil.",
+            "type": "Fullstack",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Afficher les informations de l'utilisateur connecte",
+              "Permettre la modification du profil autorisee",
+              "Valider current_password, new_password et confirm_password",
+              "Mettre a jour force_password_change apres changement",
+              "Nettoyer les champs de mot de passe apres succes"
+            ],
+            "dependencies": [
+              "Completer la gestion staff des services et parametres clinique"
+            ],
+            "priority": "moyenne",
+            "estimate": "1 jour"
+          },
+          {
+            "title": "Finaliser historique et rapports staff",
+            "description": "Brancher QueueHistoryPage et ReportsPage sur les donnees de queues et tickets afin d'analyser les journees passees d'une clinique.",
+            "type": "Fullstack",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Ajouter filtres date, statut et service",
+              "Afficher les files passees et leurs statistiques",
+              "Afficher tickets termines, annules et no-show",
+              "Calculer les indicateurs utiles au niveau clinique",
+              "Tester avec plusieurs cliniques seed"
+            ],
+            "dependencies": [
+              "Finaliser profil staff et changement de mot de passe"
+            ],
+            "priority": "moyenne",
+            "estimate": "1.5 jours"
+          }
+        ]
+      },
+      {
+        "name": "Sprint 5 : Administration, analytics et audit",
+        "sprintOwner": "Med Amin Neji",
+        "goal": "Rendre le back-office administrateur exploitable pour gerer cliniques, utilisateurs, analytics, audit logs et configuration globale.",
+        "cards": [
+          {
+            "title": "Finaliser la gestion admin des cliniques",
+            "description": "Stabiliser ClinicsPage et ClinicDetailPage pour creer, modifier, activer/desactiver et consulter les cliniques.",
+            "type": "Fullstack",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Tester creation de clinique avec settings associes",
+              "Tester edition des informations de contact et adresse",
+              "Tester activation et desactivation",
+              "Afficher les services et utilisateurs lies",
+              "Gerer les erreurs de slug ou champs obligatoires"
+            ],
+            "dependencies": [
+              "Nettoyer ApiService et les types Angular principaux"
+            ],
+            "priority": "elevee",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Completer branding, horaires et regles admin par clinique",
+            "description": "Finaliser les sections admin de personnalisation de clinique : logo, couleurs, image, horaires et regles de priorite.",
+            "type": "Fullstack",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Brancher update logo et branding",
+              "Valider primary_color et secondary_color",
+              "Brancher horaires d'ouverture",
+              "Brancher emergency_priority_rules",
+              "Verifier la persistance apres rechargement"
+            ],
+            "dependencies": [
+              "Finaliser la gestion admin des cliniques"
+            ],
+            "priority": "moyenne",
+            "estimate": "1.5 jours"
+          },
+          {
+            "title": "Finaliser la gestion admin des utilisateurs",
+            "description": "Rendre UsersManagementPage fiable pour creer, modifier, activer, assigner une clinique, changer un role et reinitialiser un mot de passe.",
+            "type": "Fullstack",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Valider email, nom, prenom, role et clinique",
+              "Afficher le mot de passe temporaire au bon moment",
+              "Tester assign-clinic, set-role et toggle-active",
+              "Tester reset-password et force_password_change",
+              "Verifier l'ecriture dans AdminAuditLog"
+            ],
+            "dependencies": [
+              "Completer branding, horaires et regles admin par clinique"
+            ],
+            "priority": "elevee",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Connecter analytics admin et exports de developpement",
+            "description": "Verifier AnalyticsPage et les endpoints overview, ranking, timeseries, status-distribution, peak-hours, export CSV et export PDF pour usage demo local.",
+            "type": "Fullstack",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Tester les filtres from et to",
+              "Afficher les KPIs principaux",
+              "Afficher ranking, timeseries, distribution et peak hours",
+              "Tester le telechargement CSV",
+              "Tester le telechargement PDF minimal"
+            ],
+            "dependencies": [
+              "Finaliser historique et rapports staff"
+            ],
+            "priority": "moyenne",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Stabiliser audit logs et system settings",
+            "description": "Finaliser AuditLogsPage et SystemSettingsPage avec filtres, detail de log, configuration de notification et endpoint de test.",
+            "type": "Fullstack",
+            "assignedTo": "Fourat Jebali",
+            "checklist": [
+              "Brancher les filtres actor, clinic, action et dates",
+              "Afficher before_data, after_data et metadata",
+              "Valider les champs Twilio, SMTP, templates et retention",
+              "Tester test-notification en mode developpement",
+              "Gerer les erreurs sans perdre les valeurs saisies"
+            ],
+            "dependencies": [
+              "Finaliser la gestion admin des utilisateurs"
+            ],
+            "priority": "moyenne",
+            "estimate": "1.5 jours"
+          }
+        ]
+      },
+      {
+        "name": "Sprint 6 : Tests, recette locale et documentation finale",
+        "sprintOwner": "Salim Halila",
+        "goal": "Valider les parcours critiques en local, documenter l'utilisation et finaliser le board de suivi sans objectif production.",
+        "cards": [
+          {
+            "title": "Ajouter les tests backend des workflows critiques",
+            "description": "Couvrir les scenarios Django REST essentiels avec fixtures locales : auth, tickets, queue actions, staff permissions et admin.",
+            "type": "Tests",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Tester login, auth/me et change-password",
+              "Tester creation de ticket public",
+              "Tester call, start, complete, cancel et no-show",
+              "Tester les permissions staff par role",
+              "Tester les endpoints admin principaux"
+            ],
+            "dependencies": [
+              "Uniformiser les validations et erreurs API",
+              "Durcir les permissions backend du module staff"
+            ],
+            "priority": "elevee",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Tester les parcours frontend manuellement en local",
+            "description": "Executer une recette Angular sur navigateur pour verifier les parcours public, staff et admin avec les donnees seed.",
+            "type": "Tests",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Scenario patient : rechercher clinique, rejoindre file, suivre ticket",
+              "Scenario staff : login, ouvrir file, appeler et completer ticket",
+              "Scenario staff : modifier services et settings",
+              "Scenario admin : creer clinique, creer utilisateur, consulter analytics",
+              "Documenter les bugs trouves et les captures utiles"
+            ],
+            "dependencies": [
+              "Stabiliser audit logs et system settings"
+            ],
+            "priority": "elevee",
+            "estimate": "2 jours"
+          },
+          {
+            "title": "Preparer une demo locale reproductible",
+            "description": "Organiser les donnees, comptes et etapes de demonstration pour presenter le projet sans deploiement externe.",
+            "type": "Documentation",
+            "assignedTo": "Med Amin Neji",
+            "checklist": [
+              "Verifier que les donnees seed suffisent a la demo",
+              "Lister les comptes admin et staff a utiliser",
+              "Preparer l'ordre des actions de demonstration",
+              "Ajouter une commande pour reset la base locale si necessaire",
+              "Documenter les limites connues de la version developpement"
+            ],
+            "dependencies": [
+              "Ajouter les tests backend des workflows critiques"
+            ],
+            "priority": "moyenne",
+            "estimate": "1 jour"
+          },
+          {
+            "title": "Finaliser README projet et guide utilisateur",
+            "description": "Completer la documentation principale du projet avec installation, architecture, comptes demo, parcours utilisateur et commandes de developpement.",
+            "type": "Documentation",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Documenter installation locale sans Docker",
+              "Documenter installation locale avec Docker Compose",
+              "Expliquer les modules public, staff et admin",
+              "Lister les comptes de demonstration",
+              "Ajouter une section troubleshooting developpement"
+            ],
+            "dependencies": [
+              "Preparer une demo locale reproductible"
+            ],
+            "priority": "moyenne",
+            "estimate": "1 jour"
+          },
+          {
+            "title": "Mettre a jour le board Trello apres recette",
+            "description": "Ajuster le board Trello avec les retours de recette locale, les bugs restants et les ameliorations futures.",
+            "type": "Documentation",
+            "assignedTo": "Salim Halila",
+            "checklist": [
+              "Verifier que chaque carte a une definition de Done claire",
+              "Ajouter les bugs trouves pendant la recette",
+              "Marquer les dependances bloquantes si necessaire",
+              "Verifier l'equilibre final entre les trois membres",
+              "Mettre a jour le JSON Trello si le scope change"
+            ],
+            "dependencies": [
+              "Tester les parcours frontend manuellement en local",
+              "Finaliser README projet et guide utilisateur"
+            ],
+            "priority": "faible",
+            "estimate": "0.5 jour"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "trello": {
+    "boardId": "YOUR_TRELLO_BOARD_ID",
+    "apiKey": "YOUR_TRELLO_API_KEY",
+    "token": "YOUR_TRELLO_TOKEN",
+    "baseUrl": "https://api.trello.com/1"
+  },
+  "import": {
+    "jsonPath": "trello/queueless-trello-board.json",
+    "dryRun": true,
+    "createLists": true,
+    "reuseExistingListsByName": true,
+    "createCards": true,
+    "skipExistingCardsByTitle": true,
+    "createChecklists": true,
+    "createLabels": true,
+    "attachLabels": true,
+    "assignMembers": true,
+    "closeDefaultLists": false
+  },
+  "memberIds": {
+    "Fourat Jebali": "TRELLO_MEMBER_ID_FOURAT",
+    "Med Amin Neji": "TRELLO_MEMBER_ID_MED_AMIN",
+    "Salim Halila": "TRELLO_MEMBER_ID_SALIM"
+  },
+  "labelColors": {
+    "Backend": "blue",
+    "Frontend": "green",
+    "Fullstack": "purple",
+    "UI/UX": "pink",
+    "Base de donnees": "orange",
+    "Tests": "yellow",
+    "Documentation": "sky",
+    "Priorite elevee": "red",
+    "Priorite moyenne": "yellow",
+    "Priorite faible": "lime"
+  }
+}

@@ -1,18 +1,21 @@
-# Use Python base image
-FROM python:3.9
+FROM python:3.9-slim
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# Copy the Django application files
+# System deps (optional; add only if you need them e.g. psycopg2 needs libpq)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Expose port 8000
 EXPOSE 8000
 
-# Command to run the application
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

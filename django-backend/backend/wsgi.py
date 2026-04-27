@@ -1,15 +1,16 @@
 """
-WSGI config for backend project.
+WSGI config for the QueueLess backend project.
 
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/6.0/howto/deployment/wsgi/
+This exposes the WSGI callable as a module‑level variable named
+``application``. It is used by Django's development server and can
+also serve as the entry point for production WSGI servers like
+Gunicorn or uWSGI.
 """
 
 import os
 
-from django.core.wsgi import get_wsgi_application
+from django.core.wsgi import get_wsgi_application  # type: ignore
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 
