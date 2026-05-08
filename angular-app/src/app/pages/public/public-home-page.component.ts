@@ -51,7 +51,7 @@ export class PublicHomePageComponent implements OnInit {
     this.loading = true;
     forkJoin({
       clinics: this.api.getClinics(),
-      queues: this.api.getQueues(),
+      queues: this.api.getQueues(undefined, { date: this.todayIsoDate() }),
       stats: this.api.getPublicStats().pipe(
         catchError(() => of(this.heroStats))
       )
@@ -238,5 +238,13 @@ export class PublicHomePageComponent implements OnInit {
   // Track by function for *ngFor optimization
   trackByClinicId(index: number, clinic: PublicClinic): string {
     return clinic.id;
+  }
+
+  private todayIsoDate(): string {
+    const value = new Date();
+    const year = value.getFullYear();
+    const month = `${value.getMonth() + 1}`.padStart(2, '0');
+    const day = `${value.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

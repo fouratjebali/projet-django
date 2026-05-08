@@ -32,7 +32,7 @@ export class UsersManagementPageComponent implements OnInit {
   clinicFilter = '';
   activeFilter = '';
 
-  readonly roleOptions: string[] = ['ADMIN', 'STAFF', 'DOCTOR', 'NURSE', 'RECEPTIONIST'];
+  readonly roleOptions: string[] = ['ADMIN', 'STAFF'];
 
   showAddUserForm = false;
   isSubmittingUser = false;

@@ -379,24 +379,21 @@ class PublicStatsView(APIView):
 
 STAFF_ROLES = {
     User.UserRole.STAFF,
-    User.UserRole.DOCTOR,
-    User.UserRole.NURSE,
-    User.UserRole.RECEPTIONIST,
 }
 
 STAFF_ACTION_ROLES = {
-    'queue_open': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST},
-    'queue_close': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST},
-    'ticket_call': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST, User.UserRole.NURSE, User.UserRole.DOCTOR},
-    'ticket_start': {User.UserRole.STAFF, User.UserRole.NURSE, User.UserRole.DOCTOR},
-    'ticket_complete': {User.UserRole.STAFF, User.UserRole.NURSE, User.UserRole.DOCTOR},
-    'ticket_cancel': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST, User.UserRole.NURSE},
-    'ticket_no_show': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST, User.UserRole.NURSE},
-    'ticket_walkin': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST},
-    'ticket_reorder': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST},
-    'ticket_update': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST, User.UserRole.NURSE, User.UserRole.DOCTOR},
-    'service_manage': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST},
-    'settings_manage': {User.UserRole.STAFF, User.UserRole.RECEPTIONIST},
+    'queue_open': STAFF_ROLES,
+    'queue_close': STAFF_ROLES,
+    'ticket_call': STAFF_ROLES,
+    'ticket_start': STAFF_ROLES,
+    'ticket_complete': STAFF_ROLES,
+    'ticket_cancel': STAFF_ROLES,
+    'ticket_no_show': STAFF_ROLES,
+    'ticket_walkin': STAFF_ROLES,
+    'ticket_reorder': STAFF_ROLES,
+    'ticket_update': STAFF_ROLES,
+    'service_manage': STAFF_ROLES,
+    'settings_manage': STAFF_ROLES,
 }
 
 
@@ -694,8 +691,8 @@ class StaffQueueOpenView(APIView):
         if error:
             return error
         target_date = _parse_iso_date(request.data.get('date') or request.query_params.get('date'), timezone.localdate())
-        queue, _ = Queue.objects.get_or_create(clinic=clinic, date=target_date, defaults={'is_active': True})
-        if not queue.is_active:
+        queue, created = Queue.objects.get_or_create(clinic=clinic, date=target_date, defaults={'is_active': False})
+        if created or not queue.is_active or queue.opened_at is None:
             queue.open()
             queue.save(update_fields=['is_active', 'opened_at', 'closed_at', 'updated_at'])
             QueueEvent.objects.create(

@@ -96,10 +96,13 @@ export class ApiService {
   }
 
   // Queues
-  getQueues(clinicId?: string): Observable<Queue[]> {
+  getQueues(clinicId?: string, filters?: { date?: string }): Observable<Queue[]> {
     let params = new HttpParams();
     if (clinicId) {
       params = params.set('clinic', clinicId);
+    }
+    if (filters?.date) {
+      params = params.set('date', filters.date);
     }
     return this.http
       .get<Queue[] | PagedResponse<Queue>>(`${this.baseUrl}/queues/`, { params })

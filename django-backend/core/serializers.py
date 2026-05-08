@@ -83,9 +83,11 @@ class TicketSerializer(serializers.ModelSerializer):
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
         clinic: Clinic = attrs['clinic']
         queue: Optional[Queue] = attrs.get('queue')
-        # For public join flows, allow queue omission and infer today's active queue.
-        if queue is None:
-            today = timezone.localdate()
+        today = timezone.localdate()
+        if queue is not None and queue.clinic_id != clinic.id:
+            raise serializers.ValidationError('Queue does not belong to the specified clinic.')
+        # Public clients may hold a stale active queue ID; always join today's daily queue.
+        if queue is None or queue.date != today:
             queue = (
                 Queue.objects.filter(clinic=clinic, date=today, is_active=True)
                 .order_by('-created_at')
@@ -94,9 +96,6 @@ class TicketSerializer(serializers.ModelSerializer):
             if queue is None:
                 queue = Queue.objects.create(clinic=clinic, date=today, is_active=True)
             attrs['queue'] = queue
-        # Ensure the queue belongs to the same clinic as the ticket
-        if queue.clinic_id != clinic.id:
-            raise serializers.ValidationError('Queue does not belong to the specified clinic.')
         if not queue.is_active:
             raise serializers.ValidationError('Queue is closed; cannot join.')
         return attrs

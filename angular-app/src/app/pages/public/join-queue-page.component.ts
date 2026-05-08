@@ -42,8 +42,8 @@ export class JoinQueuePageComponent implements OnInit {
       }
       if (this.clinic) {
         this.api.getServices(this.clinic.id).subscribe(services => (this.services = services));
-        this.api.getQueues(this.clinic.id).subscribe(queues => {
-          this.activeQueue = queues.find(q => q.is_active) || queues[0];
+        this.api.getQueues(this.clinic.id, { date: this.todayIsoDate() }).subscribe(queues => {
+          this.activeQueue = queues.find(q => q.is_active);
           this.loadQueueStats();
         });
       }
@@ -93,5 +93,12 @@ export class JoinQueuePageComponent implements OnInit {
       }
     });
   }
-}
 
+  private todayIsoDate(): string {
+    const value = new Date();
+    const year = value.getFullYear();
+    const month = `${value.getMonth() + 1}`.padStart(2, '0');
+    const day = `${value.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+}

@@ -33,7 +33,7 @@ export class PublicBoardPageComponent implements OnInit, OnDestroy {
 
   loadBoard(): void {
     if (!this.clinic) return;
-    this.api.getQueues(this.clinic.id).subscribe(queues => {
+    this.api.getQueues(this.clinic.id, { date: this.todayIsoDate() }).subscribe(queues => {
       const active = queues.find(q => q.is_active);
       if (active) {
         this.api.getTickets({ queue: active.id }).subscribe(tickets => {
@@ -44,6 +44,9 @@ export class PublicBoardPageComponent implements OnInit, OnDestroy {
             .sort((a, b) => a.position - b.position);
           this.next = waiting.slice(0, 5);
         });
+      } else {
+        this.current = undefined;
+        this.next = [];
       }
     });
   }
@@ -51,5 +54,13 @@ export class PublicBoardPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.refreshSub?.unsubscribe();
     this.clockSub?.unsubscribe();
+  }
+
+  private todayIsoDate(): string {
+    const value = new Date();
+    const year = value.getFullYear();
+    const month = `${value.getMonth() + 1}`.padStart(2, '0');
+    const day = `${value.getDate()}`.padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 }

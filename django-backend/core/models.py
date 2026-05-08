@@ -183,9 +183,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class UserRole(models.TextChoices):
         ADMIN = 'ADMIN', 'Admin'
         STAFF = 'STAFF', 'Staff'
-        DOCTOR = 'DOCTOR', 'Doctor'
-        NURSE = 'NURSE', 'Nurse'
-        RECEPTIONIST = 'RECEPTIONIST', 'Receptionist'
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     clinic = models.ForeignKey(Clinic, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')

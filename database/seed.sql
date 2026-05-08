@@ -89,46 +89,46 @@ VALUES
     (
         '650e8400-e29b-41d4-a716-446655440002',
         '550e8400-e29b-41d4-a716-446655440001',
-        'dr.sarah@metrocare.tn',
+        'staff.sarah@metrocare.tn',
         '$2b$10$p0dY3m5gmToO9nvq2j7CuuyWqmLFB.PIwKLbwb30M1ZGg/pFYHg6S',
         'Sarah',
         'Johnson',
         '+216 50 234 567',
-        'DOCTOR',
+        'STAFF',
         TRUE
     ),
     (
         '650e8400-e29b-41d4-a716-446655440003',
         '550e8400-e29b-41d4-a716-446655440001',
-        'nurse.fatma@metrocare.tn',
+        'staff.fatma@metrocare.tn',
         '$2b$10$p0dY3m5gmToO9nvq2j7CuuyWqmLFB.PIwKLbwb30M1ZGg/pFYHg6S',
         'Fatma',
         'Trabelsi',
         '+216 50 345 678',
-        'NURSE',
+        'STAFF',
         TRUE
     ),
     (
         '650e8400-e29b-41d4-a716-446655440004',
         '550e8400-e29b-41d4-a716-446655440001',
-        'receptionist@metrocare.tn',
+        'staff.amira@metrocare.tn',
         '$2b$10$p0dY3m5gmToO9nvq2j7CuuyWqmLFB.PIwKLbwb30M1ZGg/pFYHg6S',
         'Amira',
         'Mansour',
         '+216 50 456 789',
-        'RECEPTIONIST',
+        'STAFF',
         TRUE
     ),
     -- Sfax Medical Staff
     (
         '650e8400-e29b-41d4-a716-446655440005',
         '550e8400-e29b-41d4-a716-446655440002',
-        'dr.mohamed@sfaxmedical.tn',
+        'staff.mohamed@sfaxmedical.tn',
         '$2b$10$p0dY3m5gmToO9nvq2j7CuuyWqmLFB.PIwKLbwb30M1ZGg/pFYHg6S',
         'Mohamed',
         'Bouazizi',
         '+216 51 123 456',
-        'DOCTOR',
+        'STAFF',
         TRUE
     ),
     (
@@ -146,12 +146,12 @@ VALUES
     (
         '650e8400-e29b-41d4-a716-446655440007',
         '550e8400-e29b-41d4-a716-446655440003',
-        'dr.ines@soussefamily.tn',
+        'staff.ines@soussefamily.tn',
         '$2b$10$p0dY3m5gmToO9nvq2j7CuuyWqmLFB.PIwKLbwb30M1ZGg/pFYHg6S',
         'Ines',
         'Hamdi',
         '+216 52 123 456',
-        'DOCTOR',
+        'STAFF',
         TRUE
     );
 
@@ -679,7 +679,6 @@ BEGIN
     RAISE NOTICE '========================================';
     RAISE NOTICE 'Login Credentials:';
     RAISE NOTICE 'Admin: admin@queueless.tn / Password123!';
-    RAISE NOTICE 'Doctor: dr.sarah@metrocare.tn / Password123!';
-    RAISE NOTICE 'Nurse: nurse.fatma@metrocare.tn / Password123!';
+    RAISE NOTICE 'Staff: staff.sarah@metrocare.tn / Password123!';
     RAISE NOTICE '========================================';
 END $$;

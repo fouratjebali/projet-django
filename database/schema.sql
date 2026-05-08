@@ -27,10 +27,7 @@ DROP TABLE IF EXISTS clinics CASCADE;
 -- User Roles
 CREATE TYPE user_role AS ENUM (
     'ADMIN',
-    'STAFF',
-    'DOCTOR',
-    'NURSE',
-    'RECEPTIONIST'
+    'STAFF'
 );
 
 -- Ticket Status

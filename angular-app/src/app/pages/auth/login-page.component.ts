@@ -79,9 +79,6 @@ export class LoginPageComponent implements OnInit {
                 this.router.navigate(['/admin/analytics'], { replaceUrl: true });
                 break;
               case 'STAFF':
-              case 'DOCTOR':
-              case 'NURSE':
-              case 'RECEPTIONIST':
                 this.router.navigate(['/staff/dashboard'], { replaceUrl: true });
                 break;
               default:
@@ -134,7 +131,7 @@ export class LoginPageComponent implements OnInit {
       });
     } else {
       this.loginForm.patchValue({
-        email: 'staff@sfaxmedical.tn',
+        email: 'staff.sarah@metrocare.tn',
         password: 'Password123!'
       });
     }
@@ -167,8 +164,7 @@ export class LoginPageComponent implements OnInit {
     }
 
     if (returnUrl.startsWith('/staff')) {
-      const staffRoles = ['STAFF', 'DOCTOR', 'NURSE', 'RECEPTIONIST'];
-      return staffRoles.includes(role) ? returnUrl : null;
+      return role === 'STAFF' ? returnUrl : null;
     }
 
     return returnUrl.startsWith('/public') ? returnUrl : null;

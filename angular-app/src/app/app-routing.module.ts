@@ -59,7 +59,7 @@ const routes: Routes = [
     component: StaffLayoutComponent,
     canActivate: [AuthRoleGuard],
     canActivateChild: [AuthRoleGuard],
-    data: { roles: ['STAFF', 'DOCTOR', 'NURSE', 'RECEPTIONIST'] },
+    data: { roles: ['STAFF'] },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardPageComponent },

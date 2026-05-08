@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('last_name', models.CharField(max_length=100)),
                 ('phone_number', models.CharField(blank=True, max_length=20, null=True)),
                 ('avatar', models.TextField(blank=True, null=True)),
-                ('role', models.CharField(choices=[('ADMIN', 'Admin'), ('STAFF', 'Staff'), ('DOCTOR', 'Doctor'), ('NURSE', 'Nurse'), ('RECEPTIONIST', 'Receptionist')], default='STAFF', max_length=20)),
+                ('role', models.CharField(choices=[('ADMIN', 'Admin'), ('STAFF', 'Staff')], default='STAFF', max_length=20)),
                 ('is_active', models.BooleanField(default=True)),
                 ('is_staff', models.BooleanField(default=False)),
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now)),
